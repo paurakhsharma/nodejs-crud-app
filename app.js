@@ -98,6 +98,11 @@ app.post('/edit', upload.single('filetoupload'), function(req, res, next) {
     fs.writeFile('public/images/recipeImage/' + imageName, buffer, function(e) {
         console.log(e)
     });
+    try {
+        fs.unlinkSync('public/images/recipeImage/' + req.body.imageName);
+        } catch (err) {
+            console.log('Unable to delete image', err)
+        }
 });
  } else {
   imageName = req.body.imageName
@@ -107,7 +112,23 @@ app.post('/edit', upload.single('filetoupload'), function(req, res, next) {
 });
 
 app.delete('/delete/:id', (req, res) => {
- pool.query("DELETE FROM recipes WHERE id = $1", [req.params.id]);
+ elementID = req.params.id;
+ console.log(elementID)
+ pool.query("SELECT imageName FROM recipes WHERE id = $1", [elementID], (err, result)=>{
+     console.log('Image name is', result.rows[0].imagename)
+     if(!err) {
+        pool.query("DELETE FROM recipes WHERE id = $1", [elementID],(err)=> {
+            if(!err) {
+                try {
+                    fs.unlinkSync('public/images/recipeImage/' + result.rows[0].imagename);
+                    } catch (err) {
+                        console.log('Unable to delete image', err)
+                    }
+            }
+        })
+     }
+ });
+ res.redirect('/');
 });
 
 // Server

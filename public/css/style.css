@@ -11,3 +11,38 @@ body {
   #card:hover {
     box-shadow: 0 14px 28px rgba(255, 116, 0,0.25), 0 10px 10px rgba(255, 116, 0,0.22);
   }
+
+#image {
+    height:13em; 
+    width:13em; 
+    margin-left:10em; 
+    border-radius: 50%; 
+    margin-top:20px;
+    cursor: zoom-in;
+}
+
+
+#image:hover {
+    box-shadow: 0 0 10px #fff;
+}
+
+button {
+    opacity: 0.9;
+}
+
+button:hover {
+    opacity: 1;
+}
+
+
+/* Caption of Modal Image */
+.figure-caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
